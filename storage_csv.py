@@ -60,6 +60,7 @@ class StorageCsv(IStorage):
 
     # fetching movie info from API
     def fetch_movie_info(self, title):
+        """ Fetching the movie info from the API """
         try:
             res = requests.get(REQUEST_URL, params={"t": title, "apikey": MY_KEY})
             if res.status_code == 200:
@@ -117,6 +118,7 @@ class StorageCsv(IStorage):
         print(f"Movie {title} successfully deleted")
 
     def update_movie(self, title, notes):
+        """ Adds notes to the movie data """
         movies_data = []
         with open(self.file_path, "r", newline="") as fileobj:
             reader = csv.DictReader(fileobj)
@@ -126,7 +128,7 @@ class StorageCsv(IStorage):
             for row in reader:
                 if row["title"] == title:
                     row["notes"] = notes
-                movies_data.append(row)
+                movies_data.append(row.values())
         with open(self.file_path, "w", newline="") as csvfile:
             writer = csv.writer(csvfile)
             writer.writerows(movies_data)

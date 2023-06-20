@@ -45,6 +45,7 @@ class StorageJson(IStorage):
 
     # fetching movie info from API
     def fetch_movie_info(self, title):
+        """ Fetching the movie info from the API """
         try:
             res = requests.get(REQUEST_URL, params={"t": title, "apikey": MY_KEY})
             if res.status_code == 200:
@@ -96,6 +97,7 @@ class StorageJson(IStorage):
             json.dump(movies_data, newfile, indent=4)
 
     def update_movie(self, title, notes):
+        """ Adds notes to the movie data """
         with open(self.file_path, "r") as fileobj:
             movies_data = json.loads(fileobj.read())
         if title in movies_data:
